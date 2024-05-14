@@ -1,18 +1,19 @@
 package org.HashTables;
-import java.awt.desktop.SystemEventListener;
 import java.util.*;
 
-import static javax.swing.UIManager.put;
+import static javax.swing.UIManager.getDimension;
 
 public class HashTables {
     private String task;
     private String[] stringArray;
-    private LinkedHashMap<String, Integer> map;
-    private LinkedHashMap<String, Integer> sMap;
+    private LinkedHashMap<String, Integer> mapSI;
+    private LinkedHashMap<String, Integer> sMapSI;
     private String palindrom;
     private List<LinkedHashMap<String,Integer>> arraysOfMaps;
     private LinkedHashMap<String, Integer> mergedArrMap = new LinkedHashMap<>();
-
+    private ArrayList<Integer> intList;
+    private LinkedHashMap<Integer, Integer> mapII;
+    private LinkedHashMap<Integer, Integer> sMapII;
     public HashTables(String task){
         this.task = task;
     }
@@ -21,7 +22,7 @@ public class HashTables {
         return this;
     }
     public HashTables getSortedKeySet(LinkedHashMap<String, Integer> map){
-        this.map = map;
+        this.mapSI = map;
         return this;
     }
     public HashTables isPalindrom(String palindrom){
@@ -29,15 +30,32 @@ public class HashTables {
         return this;
     }
     public HashTables mergeTables(LinkedHashMap<String, Integer> map1, LinkedHashMap<String,Integer> map2){
-        this.map = map1;
-        this.sMap = map2;
+        this.mapSI = map1;
+        this.sMapSI = map2;
         return this;
     }
     public HashTables mergeTables(List<LinkedHashMap<String,Integer>> arrayOfMaps){
         this.arraysOfMaps = arrayOfMaps;
         return this;
     }
-
+    public HashTables compareTables(LinkedHashMap<String , Integer> map1, LinkedHashMap<String , Integer> map2){
+        this.mapSI = map1;
+        this.sMapSI = map2;
+        return this;
+    }
+    public HashTables createHashMapFromIntArr(ArrayList<Integer> intList){
+        this.intList = intList;
+        return this;
+    }
+    public HashTables removeEvenNums(LinkedHashMap<Integer, Integer> map){
+        this.mapII = map;
+        return this;
+    }
+    public HashTables compareTablesWithExistingKeys(LinkedHashMap<Integer, Integer> map1, LinkedHashMap<Integer, Integer> map2){
+        this.mapII = map1;
+        this.sMapII = map2;
+        return this;
+    }
     @Override
     public String toString(){
         switch (task){
@@ -46,7 +64,8 @@ public class HashTables {
                         """
                         Задание: %s,
                         Массив строк: %s,
-                        Хеш-таблица: %s.""",
+                        Хеш-таблица: %s.
+                        """,
                         task,
                         Arrays.toString(stringArray),
                         getMapFromStringList(stringArray)
@@ -57,10 +76,11 @@ public class HashTables {
                         """
                         Задание: %s,
                         Список неотсортированных ключей: %s,
-                        Список отсортированных ключей: %s.""",
+                        Список отсортированных ключей: %s.
+                        """,
                         task,
-                        map.keySet(),
-                        Arrays.toString(getSortedKeys(map))
+                        mapSI.keySet(),
+                        Arrays.toString(getSortedKeys(mapSI))
                 );
             }
             case "3" -> {
@@ -68,7 +88,6 @@ public class HashTables {
                         Задание: %s,
                         Слово для проверки: %s,
                         Палиндром? - %s
-                        
                         """,
                         task,
                         palindrom,
@@ -82,7 +101,7 @@ public class HashTables {
                         Соединеные таблицы: %s
                         """,
                         task,
-                        mergeTable(map, sMap));
+                        mergeTable(mapSI, sMapSI));
             }
             case "5" ->{
                 return String.format("""
@@ -94,16 +113,62 @@ public class HashTables {
                         Arrays.toString(new List[]{arraysOfMaps}),
                         mergeArrOfHashTables(arraysOfMaps));
             }
+            case "6" ->{
+                return String.format("""
+                        Задание: %s,
+                        Совпавшие ключи: %s,
+                        Совпавшие значения: %s,
+                        Совпавшие поля ключ : значение: %s,
+                        """,
+                        task,
+                        keysCompare(mapSI, sMapSI),
+                        valueCompare(mapSI, sMapSI),
+                        keysValueCompare(mapSI, sMapSI));
+            }
+            case "7" ->{
+                return String.format("""
+                        Задание: %s,
+                        Массив чисел: %s,
+                        Хеш-таблица: %s.
+                        """,
+                        task,
+                        intList.toString(),
+                        intAbsMap(intList));
+            }
+            case "8" ->{
+                return  String.format("""
+                        Задание: %s,
+                        Исходная хеш-таблица: %s,
+                        Исключаем четные ключи: %s.
+                       
+                        """,
+                        task,
+                        mapII.toString(),
+                        removeEvenMap(mapII));
+            }
             case null, default -> {
                 return String.format(
                         """
                          task %s doesn`t exist
                          have a nice day!
                          """,
-                        task
+                        task,
+                        mapII.toString()
+
                 );
             }
         }
+    }
+
+    public LinkedHashMap<Integer, Integer> removeEvenMap(LinkedHashMap<Integer, Integer> map) {
+        LinkedHashMap<Integer, Integer> removed;
+        removed = (LinkedHashMap<Integer, Integer>) map.clone();
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()){
+            if (entry.getKey()%2 ==0){
+                removed.remove(entry.getKey());
+            }
+        }
+        return  removed;
     }
 
     public LinkedHashMap<String, Integer> getMapFromStringList(String[] stringList){
@@ -125,6 +190,51 @@ public class HashTables {
             }
         }
         return count;
+    }
+    public LinkedHashMap<Integer, Integer> intAbsMap (ArrayList<Integer> list){
+        LinkedHashMap<Integer, Integer> absMap = new LinkedHashMap<>();
+        for (int i =0; i<list.size(); i++){
+            absMap.put(list.get(i), (list.get(i) * list.get(i)));
+        }
+        return absMap;
+    }
+    public ArrayList<String> keysValueCompare (LinkedHashMap<String, Integer> map1, LinkedHashMap<String, Integer> map2){
+        ArrayList<String> keys = new ArrayList<>();
+        //ArrayList<String> values = new ArrayList<>();
+        for(Map.Entry<String, Integer> entry : map1.entrySet()){
+            for (Map.Entry<String, Integer> entry2 : map2.entrySet()){
+
+                if (entry.getKey() == entry2.getKey()){
+                    if (entry.getValue() == entry2.getValue()){
+                        keys.add(entry2.getKey() + ":" + entry2.getValue());
+                    }
+                }
+            }
+        }
+        return keys;
+    }
+    public ArrayList<String> keysCompare (LinkedHashMap<String, Integer> map1, LinkedHashMap<String, Integer> map2){
+        ArrayList<String> keys = new ArrayList<>();
+        for(Map.Entry<String, Integer> entry : map1.entrySet()){
+            for (Map.Entry<String, Integer> entry2 : map2.entrySet()){
+                if (entry.getKey() == entry2.getKey()){
+                    keys.add(entry2.getKey());
+                }
+            }
+        }
+        return keys;
+    }
+    public ArrayList<String> valueCompare (LinkedHashMap<String, Integer> map1, LinkedHashMap<String, Integer> map2){
+        ArrayList<String> values = new ArrayList<>();
+
+        for(Map.Entry<String, Integer> entry : map1.entrySet()){
+            for (Map.Entry<String, Integer> entry2 : map2.entrySet()){
+                if (entry.getValue() == entry2.getValue()){
+                        values.add(String.valueOf(entry2.getValue()));
+                }
+            }
+        }
+        return values;
     }
     public String[] getSortedKeys(LinkedHashMap<String,Integer> map){
         String[] array = getIntArrayFromHashTable(map);
@@ -222,7 +332,7 @@ public class HashTables {
         for(Map.Entry<String, Integer> entry : map1.entrySet()){
             if (mergesMap.get(entry.getKey()) != null){
 
-                Integer value = map.get(entry.getKey());
+                Integer value = mapSI.get(entry.getKey());
 
                 mergesMap.put(entry.getKey(), value + entry.getValue());
             }

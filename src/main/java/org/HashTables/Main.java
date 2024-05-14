@@ -38,13 +38,49 @@ public class Main {
         HashTables mergesTable = new HashTables("4").mergeTables(map1, map2);
         System.out.println(mergesTable);
 
+        //task5
         List<LinkedHashMap<String,Integer>> arrayOfHashTables = new ArrayList<LinkedHashMap<String,Integer>>();
 
         arrayOfHashTables.add(map);
         arrayOfHashTables.add(map1);
         arrayOfHashTables.add(map2);
+
         HashTables mergedArrTables = new HashTables("5").mergeTables(arrayOfHashTables);
         System.out.println(mergedArrTables);
+
+        //task 6 Реализуйте алгоритм проверки, есть ли в двух различных хэш-таблицах совпадающие ключи или значения.
+        HashTables comparedTables = new HashTables("6").compareTables(map1, map2);
+        System.out.println(comparedTables);
+
+
+        //task 7 Напишите программу, которая будет принимать на вход список чисел и строить хэш-таблицу, где ключом будет число, а значением - его квадрат.
+        ArrayList<Integer> intlist = new ArrayList<>();
+        intlist.add(6);
+        intlist.add(7);
+        intlist.add(8);
+        intlist.add(9);
+        intlist.add(10);
+        HashTables toHashTableFromIntList = new HashTables("7").createHashMapFromIntArr(intlist);
+        System.out.println(toHashTableFromIntList);
+
+
+        //task 8 Разработайте функцию, которая будет принимать на вход хэш-таблицу и удалять из нее все ключи, соответствующие четным значениям.
+        LinkedHashMap<Integer,Integer> intmap;
+        intmap =toHashTableFromIntList.intAbsMap(intlist);
+        HashTables removedEvenNums = new HashTables("8").removeEvenNums(intmap);
+        System.out.println(removedEvenNums);
+
+        //task 9 Напишите функцию, которая будет принимать на вход две хэш-таблицы и возвращать новую, содержащую только те ключи, которые есть в обеих таблицах, а значения перемножаться.
+
+        LinkedHashMap<Integer, Integer> intmap2 = (LinkedHashMap<Integer, Integer>) intmap.clone();
+        intmap2.put(2,4);
+
+
+
+
+
+
+
 
     }
 }
