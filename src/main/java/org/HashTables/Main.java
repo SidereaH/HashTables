@@ -1,7 +1,6 @@
 package org.HashTables;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -39,7 +38,7 @@ public class Main {
         System.out.println(mergesTable);
 
         //task5
-        List<LinkedHashMap<String,Integer>> arrayOfHashTables = new ArrayList<LinkedHashMap<String,Integer>>();
+        List<LinkedHashMap<String,Integer>> arrayOfHashTables = new ArrayList<>();
 
         arrayOfHashTables.add(map);
         arrayOfHashTables.add(map1);

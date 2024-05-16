@@ -1,11 +1,7 @@
 package org.HashTables;
-import java.security.Key;
 import java.util.*;
-
-import static javax.swing.UIManager.getDimension;
-
 public class HashTables {
-    private String task;
+    private final String task;
     private String[] stringArray;
     private LinkedHashMap<String, Integer> mapSI;
     private LinkedHashMap<String, Integer> sMapSI;
@@ -177,8 +173,8 @@ public class HashTables {
         for(Map.Entry<Integer, Integer> entry : map1.entrySet()){
             for (Map.Entry<Integer, Integer> entry2 : map2.entrySet()){
 
-                if (entry.getKey() == entry2.getKey()){
-                    if (entry.getValue() == entry2.getValue()){
+                if (Objects.equals(entry.getKey(), entry2.getKey())){
+                    if (Objects.equals(entry.getValue(), entry2.getValue())){
                         comparedMap.put(entry2.getKey(), entry2.getValue()*entry.getValue());
                     }
                 }
@@ -208,10 +204,10 @@ public class HashTables {
         return map;
     }
     private int countWordInArray(String word, String[] array){
-        int length = array.length;
+
         int count = 0;
-        for(int i = 0; i < length; i++){
-            if(word == array[i]){
+        for (String s : array) {
+            if (Objects.equals(word, s)) {
                 count++;
             }
         }
@@ -230,8 +226,8 @@ public class HashTables {
         for(Map.Entry<String, Integer> entry : map1.entrySet()){
             for (Map.Entry<String, Integer> entry2 : map2.entrySet()){
 
-                if (entry.getKey() == entry2.getKey()){
-                    if (entry.getValue() == entry2.getValue()){
+                if (Objects.equals(entry.getKey(), entry2.getKey())){
+                    if (Objects.equals(entry.getValue(), entry2.getValue())){
                         keys.put(entry2.getKey(), entry2.getValue());
                     }
                 }
@@ -243,7 +239,7 @@ public class HashTables {
         ArrayList<String> keys = new ArrayList<>();
         for(Map.Entry<String, Integer> entry : map1.entrySet()){
             for (Map.Entry<String, Integer> entry2 : map2.entrySet()){
-                if (entry.getKey() == entry2.getKey()){
+                if (Objects.equals(entry.getKey(), entry2.getKey())){
                     keys.add(entry2.getKey());
                 }
             }
@@ -255,7 +251,7 @@ public class HashTables {
 
         for(Map.Entry<String, Integer> entry : map1.entrySet()){
             for (Map.Entry<String, Integer> entry2 : map2.entrySet()){
-                if (entry.getValue() == entry2.getValue()){
+                if (Objects.equals(entry.getValue(), entry2.getValue())){
                         values.add(String.valueOf(entry2.getValue()));
                 }
             }
@@ -264,12 +260,11 @@ public class HashTables {
     }
     public String[] getSortedKeys(LinkedHashMap<String,Integer> map){
         String[] array = getIntArrayFromHashTable(map);
-        array = quickSortString(array, 0, array.length-1);
+        quickSortString(array, 0, array.length-1);
         return array;
     }
     private String[] getIntArrayFromHashTable(LinkedHashMap<String, Integer> map){
-        String[] keyArray = map.keySet().toArray(new String[0]);
-        return  keyArray;
+        return map.keySet().toArray(new String[0]);
     }
     public static String[] quickSortString(String[] arr, int low, int high){
         if (low < high) {
@@ -331,7 +326,7 @@ public class HashTables {
         boolean isPal = false;
         ArrayList<String> keys = new ArrayList<>(map.keySet());
         ArrayList<String> keysLeft = new ArrayList<>();
-        List<String> keysRev = new ArrayList<>();
+
         for (int i =0; i<keys.size(); i++){
             String temp = keys.get(i);
             temp = String.valueOf(temp.charAt(0));
@@ -385,45 +380,6 @@ public class HashTables {
                 mergedArrMap = mergeTable(mergedArrMap, arrayOfMaps.get(i));
         }
         return mergedArrMap;
-
-//        for (int i =0 ; i < arrayOfMaps.size(); i++){
-//            System.out.println("alo " + i);
-//            if(i == arrayOfMaps.size()-1){
-//                mergedArrMap = mergeTable(arrayOfMaps.get(i), arrayOfMaps.get(i));
-//                mergedArrMap.put(arrayOfMaps.get(i))
-//            }
-//            else {
-//                mergedArrMap = mergeTable(arrayOfMaps.get(i), arrayOfMaps.get(i + 1));
-//            }
-//
-//
-//        }
-//        return mergedArrMap;
-
-//        if(arrayOfMaps.size() <= 2){
-//            return mergeTable(arrayOfMaps.get(0),arrayOfMaps.get(1));
-//        }
-//
-//        return mergedArrMap = (mergeArrOfHashTables(arrayOfMaps));
-
-    }
-    static <K,V> K getKeyByIndex(LinkedHashMap<K,V> map, int index)
-    {
-        return map.keySet().stream().skip(index).findFirst().orElse(null);
-    }
-    private LinkedHashMap<String, Integer> addToHashMap(LinkedHashMap<String, Integer> mainMap, LinkedHashMap<String, Integer> whatToAdd){
-        for(Map.Entry<String, Integer> entry : whatToAdd.entrySet()){
-            if (mainMap.get(entry.getKey()) != null){
-
-                Integer value = mainMap.get(entry.getKey());
-
-                mainMap.put(entry.getKey(), value + entry.getValue());
-            }
-            else {
-                mainMap.put(entry.getKey(), entry.getValue());
-            }
-        }
-        return mainMap;
     }
 
 }
