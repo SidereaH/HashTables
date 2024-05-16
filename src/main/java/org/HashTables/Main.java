@@ -74,13 +74,8 @@ public class Main {
 
         LinkedHashMap<Integer, Integer> intmap2 = (LinkedHashMap<Integer, Integer>) intmap.clone();
         intmap2.put(2,4);
-
-
-
-
-
-
-
+        HashTables comapreInts = new HashTables("9").compareIntTablesWithExistingKeys(intmap, intmap2);
+        System.out.println(comapreInts);
 
     }
 }

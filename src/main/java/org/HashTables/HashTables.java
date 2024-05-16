@@ -1,4 +1,5 @@
 package org.HashTables;
+import java.security.Key;
 import java.util.*;
 
 import static javax.swing.UIManager.getDimension;
@@ -51,7 +52,7 @@ public class HashTables {
         this.mapII = map;
         return this;
     }
-    public HashTables compareTablesWithExistingKeys(LinkedHashMap<Integer, Integer> map1, LinkedHashMap<Integer, Integer> map2){
+    public HashTables compareIntTablesWithExistingKeys(LinkedHashMap<Integer, Integer> map1, LinkedHashMap<Integer, Integer> map2){
         this.mapII = map1;
         this.sMapII = map2;
         return this;
@@ -138,13 +139,25 @@ public class HashTables {
             case "8" ->{
                 return  String.format("""
                         Задание: %s,
-                        Исходная хеш-таблица: %s,
-                        Исключаем четные ключи: %s.
+                        ishodnaya хеш-таблица: %s,
+                        removed четные ключи: %s.
                        
                         """,
                         task,
                         mapII.toString(),
                         removeEvenMap(mapII));
+            }
+            case "9" -> {
+                return String.format("""
+                        Задание: %s,
+                        Первая хеш таблица: %s,
+                        Вторая хеш-таблица: %s,
+                        Оставлены совпадения ключей, значения перемножены: %s.
+                        """,
+                        task,
+                        mapII,
+                        sMapII,
+                        compareIntHash(mapII,sMapII));
             }
             case null, default -> {
                 return String.format(
@@ -152,14 +165,27 @@ public class HashTables {
                          task %s doesn`t exist
                          have a nice day!
                          """,
-                        task,
-                        mapII.toString()
+                        task
+
 
                 );
             }
         }
     }
+    public LinkedHashMap<Integer, Integer> compareIntHash(LinkedHashMap<Integer,Integer> map1,LinkedHashMap<Integer,Integer> map2){
+        LinkedHashMap<Integer, Integer> comparedMap = new LinkedHashMap<>();
+        for(Map.Entry<Integer, Integer> entry : map1.entrySet()){
+            for (Map.Entry<Integer, Integer> entry2 : map2.entrySet()){
 
+                if (entry.getKey() == entry2.getKey()){
+                    if (entry.getValue() == entry2.getValue()){
+                        comparedMap.put(entry2.getKey(), entry2.getValue()*entry.getValue());
+                    }
+                }
+            }
+        }
+        return comparedMap;
+    }
     public LinkedHashMap<Integer, Integer> removeEvenMap(LinkedHashMap<Integer, Integer> map) {
         LinkedHashMap<Integer, Integer> removed;
         removed = (LinkedHashMap<Integer, Integer>) map.clone();
@@ -198,15 +224,15 @@ public class HashTables {
         }
         return absMap;
     }
-    public ArrayList<String> keysValueCompare (LinkedHashMap<String, Integer> map1, LinkedHashMap<String, Integer> map2){
-        ArrayList<String> keys = new ArrayList<>();
+    public LinkedHashMap<String, Integer> keysValueCompare (LinkedHashMap<String, Integer> map1, LinkedHashMap<String, Integer> map2){
+        LinkedHashMap<String, Integer> keys = new LinkedHashMap<>();
         //ArrayList<String> values = new ArrayList<>();
         for(Map.Entry<String, Integer> entry : map1.entrySet()){
             for (Map.Entry<String, Integer> entry2 : map2.entrySet()){
 
                 if (entry.getKey() == entry2.getKey()){
                     if (entry.getValue() == entry2.getValue()){
-                        keys.add(entry2.getKey() + ":" + entry2.getValue());
+                        keys.put(entry2.getKey(), entry2.getValue());
                     }
                 }
             }
