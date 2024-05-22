@@ -22,7 +22,7 @@ public class Main {
         System.out.println(sortedKeysFromHashTable);
 
         //task 3
-        String palindrom = "madam";
+        String palindrom = "nemadam";
         HashTables isPalindrom = new HashTables("3").isPalindrom(palindrom);
         System.out.println(isPalindrom);
 

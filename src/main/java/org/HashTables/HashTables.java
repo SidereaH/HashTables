@@ -60,7 +60,7 @@ public class HashTables {
                 return String.format(
                         """
                         Задание: %s,
-                        Массив строк: %s,
+                        Список строк: %s,
                         Хеш-таблица: %s.
                         """,
                         task,
